@@ -1,18 +1,16 @@
 const express = require("express");
 const fs = require("fs");
+const path = require("path");
+
 const { myFunction, myOtherFunction } = require("./middleware/auth");
 
 const app = express();
+const public_directory = path.join(__dirname, "../public");
 
 app.use(express.json());
 app.use(myFunction);
 app.use(myOtherFunction);
-
-app.get("/", (req, res) => {
-  console.log("...then running controller");
-  console.log(req.query);
-  res.send("Hello World");
-});
+app.use(express.static(public_directory));
 
 app.get("/data", (req, res) => {
   console.log(req.query);
